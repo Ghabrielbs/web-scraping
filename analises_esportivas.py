@@ -1,13 +1,9 @@
 #imports
-
-import statistics
-from lxml import html
-from bs4 import BeautifulSoup, Comment
 import pandas as pd
 import requests
 import plotly.graph_objects as go
 
-
+#dicionários com os times e seus respectivos endereços na API
 teams_adress_A = {'palmeiras' : 'palmeiras/1963', 'internacional' : 'internacional/1966', 'flamengo' : 'flamengo/5981', 'fluminense' : 'fluminense/1961',
 'corinthians' : 'corinthians/1957', 'athletico paranaense' : 'athletico/1967', 'atletico mineiro' : 'atletico-mineiro/1977',
 'america mineiro' : 'america-mineiro/1973', 'fortaleza' : 'fortaleza/2020', 'botafogo' : 'botafogo/1958', 'santos' : 'santos/1968',
@@ -59,7 +55,7 @@ def escolhe_time(time:str):
     
 
 
-    #corpo da apia
+    #corpo da api
     middle_api = f'/unique-tournament/{serie}/season/'
 
     url_17 = base_api + id_time + middle_api + enpoint_17 + end_api
@@ -93,6 +89,7 @@ def escolhe_time(time:str):
 
     return data_list
 
+#função que constrói o dataframe do time escolhido
 def build_dataframe(time:str): 
     team = escolhe_time(time.lower())
 
@@ -108,7 +105,7 @@ def build_dataframe(time:str):
     return team_dataframe
 
 
-
+#função que constrói o gráfico comparativo entre dois times
 def build_chart(metric:str, time1:str, time2:str):
     df_time1 = build_dataframe(time1.lower())
     df_time2 = build_dataframe(time2.lower())
